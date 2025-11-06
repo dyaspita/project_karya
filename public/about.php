@@ -52,12 +52,6 @@
             font-size: 1.3rem;
             font-weight: 600;
         }
-        .section p, .section ul {
-            font-size: 1.1rem;
-            color: #555;
-            line-height: 1.8;
-            text-align: justify;
-        }
 
         .creator-section {
             text-align: center;

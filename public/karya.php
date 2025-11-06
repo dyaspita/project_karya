@@ -2,7 +2,7 @@
 include 'header.php';
 include '../config/koneksi.php';
 
-// Tangkap keyword pencarian jika ada
+// Menangkap keyword searching yyyy
 $keyword = '';
 if (isset($_GET['search'])) {
     $keyword = mysqli_real_escape_string($conn, $_GET['search']);
@@ -27,7 +27,6 @@ if (isset($_GET['search'])) {
 
   <div class="grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-10">
     <?php
-      // Query dengan search
       if ($keyword != '') {
           $query = "SELECT * FROM karya 
                     WHERE judul LIKE '%$keyword%' OR pembuat_karya LIKE '%$keyword%' 

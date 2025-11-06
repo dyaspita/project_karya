@@ -15,7 +15,7 @@
       line-height: 1.6;
       margin: 0;
       padding: 0;
-      background-color: #f4f4f4;
+      background-color: #ffffffff;
       color: #333;
     }
     .container {
@@ -24,7 +24,7 @@
       padding: 2rem;
     }
     .section {
-      background: white;
+      background-color: #a5cbffff;
       margin-bottom: 2rem;
       padding: 3rem;
       border-radius: 10px;
@@ -39,7 +39,7 @@
     }
     .section p {
       font-size: 1.1rem;
-      color: #555;
+      color: #555555ff;
       max-width: 800px;
       margin: 0 auto;
       line-height: 1.8;
@@ -72,6 +72,7 @@
       </div>
     </div>
   </div>
+
 
   <div class="container">
     <section class="section">

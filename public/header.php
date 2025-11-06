@@ -20,11 +20,7 @@
           <a href="karya.php" class="no-underline rounded-md px-3 py-2 text-sm font-medium text-gray-900 hover:bg-black hover:text-white">Karya</a>
           <a href="about.php" class="no-underline rounded-md px-3 py-2 text-sm font-medium text-gray-900 hover:bg-black hover:text-white">Tentang</a>
           <a href="kontak.php" class="no-underline rounded-md px-3 py-2 text-sm font-medium text-gray-900 hover:bg-black hover:text-white">Kontak</a>
-          <a href="daftar.php" class="no-underline rounded-md px-3 py-2 text-sm font-medium text-gray-900 hover:bg-black hover:text-white">Daftar</a>
           <a href="login.php" class="no-underline rounded-md px-3 py-2 text-sm font-medium text-gray-900 hover:bg-black hover:text-white">Login</a>
-          <a href="profile.php" class="no-underline rounded-md px-3 py-2 text-sm font-medium text-gray-900 hover:bg-black hover:text-white">Profile</a>
-
-
           </div>
         </div>
       </div>

@@ -63,7 +63,7 @@
                 <p><strong>Alamat:</strong> Jl. Condong Catur, Depok, Sleman</p>
                 <p><strong>Telepon:</strong> 0894-7478-8833</p>
                 <p><strong>Email:</strong> 
-                    <a href="mailto:wahyudyaspuspitasari3@gmail.com">wahyudyaspuspitasari3@gmail.com</a>
+                    <a href="emailto:wahyudyaspuspitasari3@gmail.com">wahyudyaspuspitasari3@gmail.com</a>
                 </p>
             </div>
             <div class="map-container">

@@ -16,8 +16,10 @@ $data = mysqli_fetch_assoc($result);
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-50 min-h-screen flex items-center justify-center">
+  
   <div class="bg-white p-8 rounded-xl shadow-md w-full max-w-lg">
     <h2 class="text-2xl font-bold mb-6 text-gray-800">Edit Karya Seni</h2>
+
 
     <form action="../app/proses_edit.php" method="POST" enctype="multipart/form-data">
       <input type="hidden" name="id_karya" value="<?= $data['id_karya'] ?>">

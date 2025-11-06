@@ -21,6 +21,7 @@
       </a>
     </div>
 
+    
     <?php if (isset($_GET['hapus']) && $_GET['hapus'] == 'success'): ?>
       <div class="mb-6 bg-red-100 text-red-700 px-4 py-3 rounded-lg">Karya berhasil dihapus!</div>
     <?php elseif (isset($_GET['edit']) && $_GET['edit'] == 'success'): ?>
@@ -28,12 +29,27 @@
     <?php elseif (isset($_GET['success'])): ?>
       <div class="mb-6 bg-blue-100 text-blue-700 px-4 py-3 rounded-lg">Karya baru berhasil ditambahkan!</div>
     <?php endif; ?>
+    
+    <!--Search bar -->
+    <form method="GET" class="mb-6 flex items-center space-x-2">
+      <input 
+        type="text" 
+        name="search" 
+        placeholder="Cari berdasarkan judul atau pembuat..."
+        value="<?= isset($_GET['search']) ? htmlspecialchars($_GET['search']) : '' ?>"
+        class="w-80 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+      <button 
+        type="submit" 
+        class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition">
+        Cari
+      </button>
+    </form>
 
     <div class="overflow-x-auto bg-white rounded-xl shadow-md">
       <table class="min-w-full text-sm text-left text-gray-700">
         <thead class="bg-gray-100 border-b text-gray-900 text-sm uppercase">
           <tr>
-            <th class="px-6 py-3">No</th>
+            <th class="px-6 py-3 text-center">No</th>
             <th class="px-6 py-3">Gambar</th>
             <th class="px-6 py-3">Judul</th>
             <th class="px-6 py-3">Pembuat</th>
@@ -43,7 +59,13 @@
         </thead>
         <tbody>
           <?php
-            $query = "SELECT * FROM karya ORDER BY tanggal DESC";
+            //Pencarian
+            $search = isset($_GET['search']) ? mysqli_real_escape_string($conn, $_GET['search']) : '';
+            $query = "SELECT * FROM karya";
+            if (!empty($search)) {//CEK APAKAH SI USER MASUKIN KEYWORD PENCARIAN
+              $query .= " WHERE judul LIKE '%$search%' OR pembuat_karya LIKE '%$search%'";//MENAMPILKAN SESUAI KEYWORD YG COCOK
+            }
+            $query .= " ORDER BY tanggal DESC";//MENAMPILKAN BERDASARKAN TGL YG  TERBARU
             $result = mysqli_query($conn, $query);
             $no = 1;
 
@@ -85,7 +107,7 @@
               echo "
                 <tr>
                   <td colspan='6' class='px-6 py-6 text-center text-gray-500'>
-                    Belum ada karya yang ditambahkan.
+                    Tidak ada hasil yang ditemukan.
                   </td>
                 </tr>
               ";

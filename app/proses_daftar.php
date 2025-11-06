@@ -1,58 +1,57 @@
 <?php
-include "../config/koneksi.php";  
 session_start();
+include '../config/koneksi.php';
 
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-  header('Location: ../public/daftar.php');
-  exit;
-}
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $email = trim($_POST['email']);
+    $password = trim($_POST['password']);
 
-$nama = trim($_POST['nama'] ?? '');
-$email = trim($_POST['email'] ?? '');
-$password = $_POST['password'] ?? '';
+    // Validasi input dasar
+    if (empty($email) || empty($password)) {
+        header("Location: ../public/daftar.php?error=Semua kolom wajib diisi");
+        exit();
+    }
 
-if ($nama === '' || $email === '' || $password === '') {
-  header('Location: ../public/daftar.php?error=' . urlencode('Harap diisi dengan lengkap'));
-  exit;
-}
+    // Validasi format email
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        header("Location: ../public/daftar.php?error=Format email tidak valid");
+        exit();
+    }
 
-if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-  header('Location: ../public/daftar.php?error=' . urlencode('Email tidak valid'));
-  exit;
-}
+    // Cek apakah email sudah terdaftar
+    $stmt_cek = $koneksi_db->prepare("SELECT id FROM pengguna WHERE email_pengguna = ?");
+    $stmt_cek->bind_param("s", $email);
+    $stmt_cek->execute();
+    $result_cek = $stmt_cek->get_result();
 
-if (strlen($password) < 6) {
-  header('Location: ../public/daftar.php?error=' . urlencode('Password minimal 6 karakter'));
-  exit;
-}
+    if ($result_cek->num_rows > 0) {
+        header("Location: ../public/daftar.php?error=Email sudah terdaftar");
+        $stmt_cek->close();
+        $koneksi_db->close();
+        exit();
+    }
+    $stmt_cek->close();
 
-$stmt = mysqli_prepare($conn, "SELECT id FROM pengguna WHERE email_pengguna = ?");
-mysqli_stmt_bind_param($stmt, "s", $email);
-mysqli_stmt_execute($stmt);
-mysqli_stmt_store_result($stmt);
-if (mysqli_stmt_num_rows($stmt) > 0) {
-  mysqli_stmt_close($stmt);
-  header('Location: ../public/daftar.php?error=' . urlencode('Email sudah terdaftar'));
-  exit;
-}
-mysqli_stmt_close($stmt);
+    // Role default user
+    $role = "user";
 
-$password = $password;  
-$stmt = mysqli_prepare($conn, "INSERT INTO pengguna (nama_pengguna, email_pengguna, password_pengguna, role) VALUES (?, ?, ?, 'user')");
-if (!$stmt) {
-  header('Location: ../public/daftar.php?error=' . urlencode('Terjadi kesalahan server'));
-  exit;
-}
-mysqli_stmt_bind_param($stmt, "sss", $nama, $email, $password);  
-$ok = mysqli_stmt_execute($stmt);
-mysqli_stmt_close($stmt);
-mysqli_close($conn);
+    // Simpan data user baru ke database (tanpa hash password)
+    $stmt_insert = $koneksi_db->prepare("
+        INSERT INTO pengguna (email_pengguna, password, role)
+        VALUES (?, ?, ?)
+    ");
+    $stmt_insert->bind_param("sss", $email, $password, $role);
 
-if ($ok) {
-  header('Location: ../public/login.php?registered=1');
-  exit;
+    if ($stmt_insert->execute()) {
+        header("Location: ../public/login.php?sukses=Registrasi berhasil! Silakan login.");
+    } else {
+        header("Location: ../public/daftar.php?error=Registrasi gagal, coba lagi.");
+    }
+
+    $stmt_insert->close();
+    $koneksi_db->close();
 } else {
-  header('Location: ../public/daftar.php?error=' . urlencode('Gagal membuat akun'));
-  exit;
+    header("Location: ../public/daftar.php");
+    exit();
 }
 ?>

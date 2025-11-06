@@ -1,9 +1,11 @@
 <?php
 session_start();
 include "../config/koneksi.php";
+
 if (!isset($_SESSION['id_admin'])) {
     $_SESSION['id_admin'] = 1; 
 }
+
 // Ambil data dari form
 $judul = $_POST['judul'];
 $pembuat_karya = $_POST['pembuat_karya'];
@@ -13,7 +15,7 @@ $id_admin = $_SESSION['id_admin'];
 
 // Upload file gambar
 $folder = "../public/uploads/";
-if (!is_dir($folder)) mkdir($folder, 0777, true);
+if (!is_dir($folder)) mkdir($folder, 0777, true);//UNTUK MEMERIKSA APAKAH SI FOLDER INI SDH ADA DI DIREKTORI
 
 $namaFile = basename($_FILES['gambar']['name']);
 $targetFile = $folder . $namaFile;

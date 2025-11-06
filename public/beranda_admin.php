@@ -25,22 +25,26 @@
   }
   ?>
 
-  <div class="flex h-screen">
     <!-- Sidebar -->
-    <div class="w-64 bg-gray-900 text-white">
-      <div class="p-4">
-        <h2 class="text-xl font-bold">Admin Panel</h2>
-      </div>
-      <nav class="mt-4">
-        <a href="tambah_karya.php?page=tambah_karya" class="block py-2 px-4 hover:bg-gray-700">Tambah Karya</a>
-        <a href="list_karya.php?page=edit_karya" class="block py-2 px-4 hover:bg-gray-700">List Karya</a>
-        <a href="pesan_kontak.php?page=pesan_kontak" class="block py-2 px-4 hover:bg-gray-700">Pesan Kontak</a>
-        <a href="logout.php" class="block py-2 px-4 hover:bg-gray-700 mt-8">Logout</a>
-      </nav>
-    </div>
+<div class="fixed top-0 left-0 h-full w-64 bg-gray-900 text-white flex flex-col">
+  <div class="p-4 border-b border-gray-700">
+    <h2 class="text-xl font-bold">Admin Panel</h2>
+  </div>
+  <nav class="flex-1 mt-4 overflow-y-auto">
+    <a href="tambah_karya.php?page=tambah_karya" class="block py-2 px-4 hover:bg-gray-700">Tambah Karya</a>
+    <a href="list_karya.php?page=edit_karya" class="block py-2 px-4 hover:bg-gray-700">List Karya</a>
+    <a href="pesan_kontak.php?page=pesan_kontak" class="block py-2 px-4 hover:bg-gray-700">Pesan Kontak</a>
+  </nav>
+  <div class="p-4">
+    <a href="logout.php" class="block py-2 px-4 bg-red-600 text-center rounded-md hover:bg-red-700 transition">
+      Logout
+    </a>
+  </div>
+</div>
+
 
     <!-- Main Content -->
-    <div class="flex-1 p-8">
+<div class="ml-64 flex-0 p-8 overflow-y-auto">
       <?php
       $page = $_GET['page'] ?? 'beranda';
       switch ($page) {
